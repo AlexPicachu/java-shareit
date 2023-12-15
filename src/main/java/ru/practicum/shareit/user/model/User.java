@@ -6,6 +6,10 @@ import lombok.Data;
 /**
  * TODO Sprint add-controllers.
  */
+
+/**
+ * Модель пользователя
+ */
 @Data
 @Builder
 public class User {
