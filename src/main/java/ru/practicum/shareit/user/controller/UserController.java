@@ -35,33 +35,33 @@ public class UserController {
      * Метод создает нового пользователя и возвращает преобразованного в DTO
      */
     @PostMapping
-    public UserDto createUser(@Valid @RequestBody UserDto userDto){
-     User user = userService.createUser(UserMapper.DtoToUser(userDto));
-     return UserMapper.UserToDto(user);
+    public UserDto createUser(@Valid @RequestBody UserDto userDto) {
+        User user = userService.createUser(UserMapper.DtoToUser(userDto));
+        return UserMapper.UserToDto(user);
     }
 
     /**
      * метод обновляет данные пользователя и возвращает преобразованного в DTO
      */
     @PatchMapping("/{id}")
-    public UserDto updateUserById(@PathVariable long id, @RequestBody UserDto userDto){
-        User user = userService.updateUser(UserMapper.UserToDtoDyId(id ,userDto));
+    public UserDto updateUserById(@PathVariable long id, @RequestBody UserDto userDto) {
+        User user = userService.updateUser(UserMapper.UserToDtoDyId(id, userDto));
         return UserMapper.UserToDto(user);
     }
 
     /**
      * Метод удаляющий пользователя по id
      */
-     @DeleteMapping("/{id}")
-    public void deleteUserById(@PathVariable long id){
-         userService.deleteUser(id);
-     }
+    @DeleteMapping("/{id}")
+    public void deleteUserById(@PathVariable long id) {
+        userService.deleteUser(id);
+    }
 
     /**
      * Метод возвращающий пользователя по id
      */
     @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable long id){
+    public UserDto getUserById(@PathVariable long id) {
         User user = userService.getUserById(id);
         return UserMapper.UserToDto(user);
     }
