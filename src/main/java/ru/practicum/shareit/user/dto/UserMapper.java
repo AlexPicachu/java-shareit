@@ -16,7 +16,7 @@ public class UserMapper {
      *
      * @param user - переданный пользователь
      */
-    public static UserDto UserToDto(User user) {
+    public static UserDto userToDto(User user) {
         return UserDto.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -30,7 +30,7 @@ public class UserMapper {
      * @param userDto переданный пользователь в в формате DTO
      * @return пользователя
      */
-    public static User DtoToUser(UserDto userDto) {
+    public static User dtoToUser(UserDto userDto) {
         return User.builder()
                 .id(userDto.getId())
                 .email(userDto.getEmail())
@@ -45,7 +45,7 @@ public class UserMapper {
      * @param userDto - переданный пользователь в в формате DTO
      * @return - пользователя
      */
-    public static User UserToDtoDyId(long id, UserDto userDto) {
+    public static User userToDtoDyId(long id, UserDto userDto) {
         return User.builder()
                 .id(id)
                 .email(userDto.getEmail())
