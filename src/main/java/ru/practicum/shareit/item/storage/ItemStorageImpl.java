@@ -2,7 +2,7 @@ package ru.practicum.shareit.item.storage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.practicum.shareit.exeption.ChangeException;
+import ru.practicum.shareit.exeption.NoDataRequestedInStorageException;
 import ru.practicum.shareit.exeption.ValidationException;
 import ru.practicum.shareit.item.model.Item;
 
@@ -46,7 +46,7 @@ public class ItemStorageImpl implements ItemStorage {
     public Item updateItem(long userId, Item item) {
         if (!items.containsKey(item.getId())) {
             log.info("Не правильно передан  id = " + item.getId() + " вещи");
-            throw new ChangeException("Не правильно передан  id = " + item.getId() + " вещи");
+            throw new NoDataRequestedInStorageException("Не правильно передан  id = " + item.getId() + " вещи");
         }
         if (userId != item.getOwner().getId()) {
             log.info("Заданы неверные параметры для обновления");
@@ -87,7 +87,7 @@ public class ItemStorageImpl implements ItemStorage {
     public Item getItemBuId(long id) {
         if (!items.containsKey(id)) {
             log.info("Не найдена вещь с таким id = " + id);
-            throw new ChangeException("Не найдена вещь с таким id = " + id);
+            throw new NoDataRequestedInStorageException("Не найдена вещь с таким id = " + id);
         }
         log.info("Найдена вещь - {}", items.get(itemId));
         return items.get(itemId);

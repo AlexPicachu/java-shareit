@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class ItemController {
     private final ItemService itemService;
 
-    public static final String USER_ID = "X-Sharer-User-Id";
+    private static final String USER_ID = "X-Sharer-User-Id";
 
     /**
      * Метод добавляет новую вещь

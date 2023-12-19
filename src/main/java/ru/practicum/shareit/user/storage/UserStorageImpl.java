@@ -2,7 +2,7 @@ package ru.practicum.shareit.user.storage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.practicum.shareit.exeption.ChangeException;
+import ru.practicum.shareit.exeption.NoDataRequestedInStorageException;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.*;
@@ -35,7 +35,7 @@ public class UserStorageImpl implements UserStorage {
         for (User value : users.values()) {
             if (value.getEmail().equals(user.getEmail())) {
                 log.info("Пользователь с почтой = " + user.getEmail() + " уже существует");
-                throw new ChangeException("Пользователь с почтой = " + user.getEmail() + " уже существует");
+                throw new NoDataRequestedInStorageException("Пользователь с почтой = " + user.getEmail() + " уже существует");
             }
         }
         user.setId(++userId);
@@ -56,7 +56,7 @@ public class UserStorageImpl implements UserStorage {
         if (user.getEmail() != null) {
             for (User value : users.values()) {
                 if (Objects.equals(value.getEmail(), user.getEmail()) && user.getId() != value.getId()) {
-                    throw new ChangeException("Уже существует пользователь с почтой = " + user.getEmail());
+                    throw new NoDataRequestedInStorageException("Уже существует пользователь с почтой = " + user.getEmail());
                 }
             }
             users.get(user.getId()).setEmail(user.getEmail());
@@ -99,7 +99,7 @@ public class UserStorageImpl implements UserStorage {
     private void checkUser(long checkId) {
         if (!users.containsKey(checkId)) {
             log.info("Пользователя с таким id = " + checkId + " не существует");
-            throw new ChangeException("Пользователя с таким id = " + checkId + " не существует");
+            throw new NoDataRequestedInStorageException("Пользователя с таким id = " + checkId + " не существует");
         }
     }
 

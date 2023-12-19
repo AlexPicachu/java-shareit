@@ -15,7 +15,7 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleValidationException(final ValidationException e) {
-        log.info("Ошибка 400");
+        log.info("Произошла ошибка 400 при сверке данный");
         return new ErrorResponse(e.getMessage());
     }
 
@@ -25,7 +25,7 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotFoundException(final NotFoundException e) {
-        log.info("ошибка 404");
+        log.info("Произошла ошибка 404 при поиске переданных параметров в хранилище");
         return new ErrorResponse(e.getMessage());
     }
 }
