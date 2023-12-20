@@ -1,29 +1,22 @@
-package ru.practicum.shareit.item.dto;
+package ru.practicum.shareit.user.dto;
 
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-
-/**
- * TODO Sprint add-controllers.
- */
 
 /**
  * класс DTO(Data Transfer Object)
  */
 @Data
 @Builder(toBuilder = true)
-public class ItemDto {
-
+public class UserDto {
     private long id;
+    @Email
     @NotNull
+    private String email;
     @NotBlank
     private String name;
-    @NotNull
-    private String description;
-    @NotNull
-    private Boolean available;
 }
