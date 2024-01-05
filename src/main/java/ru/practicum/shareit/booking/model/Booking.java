@@ -14,6 +14,10 @@ import java.time.LocalDateTime;
 /**
  * TODO Sprint add-bookings.
  */
+
+/**
+ * Класс - сущность бронирования
+ */
 @Entity
 @Table(name = "bookings")
 @Data

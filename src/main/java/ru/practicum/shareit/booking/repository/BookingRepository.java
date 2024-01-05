@@ -8,6 +8,9 @@ import ru.practicum.shareit.user.model.User;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Контракт для реализации кастомных методов JpaRepository
+ */
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findAllByBookingUserOrderByStartDesc(User user);

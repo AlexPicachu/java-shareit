@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
  * TODO Sprint add-controllers.
  */
 
+/**
+ * Класс контроллер, для принятия запросов сущности Item
+ */
 @RestController
 @RequestMapping("/items")
 @AllArgsConstructor

@@ -7,6 +7,9 @@ import ru.practicum.shareit.item.comment.CommentDto;
 
 import java.util.List;
 
+/**
+ * Класс для формирования ответа пользователю
+ */
 @Data
 @Builder
 public class ItemWithCommentsAndBookings {

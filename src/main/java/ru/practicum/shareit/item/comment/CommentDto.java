@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * Класс для формирования ответа пользователю
+ */
 @Builder
 @Data
 @AllArgsConstructor

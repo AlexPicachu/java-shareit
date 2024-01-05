@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Класс для формирования входящих комментариев
+ */
 @Data
 @Builder
 @AllArgsConstructor

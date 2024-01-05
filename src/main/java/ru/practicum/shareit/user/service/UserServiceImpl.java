@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Метод для создания пользователя
+     *
      * @param user - переданный пользователь
      * @return - нового пользователя
      */
@@ -43,6 +44,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Метод обновления пользователя
+     *
      * @param user - переданные параметры пользователя для обновления существующего
      * @return - обновленного пользователя
      */
@@ -63,6 +65,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Метод запроса пользователя по ID
+     *
      * @param id - пользователя
      * @return - пользователя по запросу
      */
@@ -75,6 +78,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Метод удаления пользователя по ID
+     *
      * @param id - удаляемого пользователя
      */
     @Override
@@ -85,6 +89,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Метод для проверки пользователя, на наличие его в базе данных
+     *
      * @param checkId - проверяемого пользователя
      */
     private void checkUser(long checkId) {

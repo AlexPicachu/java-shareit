@@ -1,12 +1,10 @@
 package ru.practicum.shareit.item.service;
 
 import ru.practicum.shareit.item.comment.Comment;
-import ru.practicum.shareit.item.comment.CommentDto;
 import ru.practicum.shareit.item.comment.CommentDtoInput;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemWithCommentsAndBookings;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
 
@@ -26,7 +24,7 @@ public interface ItemService {
     Item updateItem(long id, long userId, ItemDto item);
 
     /**
-     * Метод возвращает вещт конкретного пользователя
+     * Метод возвращает вещь конкретного пользователя
      */
     ItemWithCommentsAndBookings getItem(long id, long userId);
 

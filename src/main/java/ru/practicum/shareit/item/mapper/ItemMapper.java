@@ -1,7 +1,6 @@
 package ru.practicum.shareit.item.mapper;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import ru.practicum.shareit.booking.dto.BookingShort;
 import ru.practicum.shareit.item.comment.CommentDto;
@@ -57,8 +56,9 @@ public class ItemMapper {
                 .owner(user)
                 .build();
     }
+
     public static ItemWithCommentsAndBookings toItemWithTime(Item item, BookingShort last, BookingShort next,
-                                                             List<CommentDto> commentDto){
+                                                             List<CommentDto> commentDto) {
         return ItemWithCommentsAndBookings.builder()
                 .id(item.getId())
                 .name(item.getName())

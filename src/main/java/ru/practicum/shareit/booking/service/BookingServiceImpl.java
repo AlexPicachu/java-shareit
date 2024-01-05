@@ -12,15 +12,16 @@ import ru.practicum.shareit.exeption.NotFoundException;
 import ru.practicum.shareit.exeption.ValidationException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
-import ru.practicum.shareit.item.service.ItemService;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.user.service.UserService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс реализующий интерфейс BookingService
+ */
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -31,6 +32,13 @@ public class BookingServiceImpl implements BookingService {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
 
+    /**
+     * Метод добавления нового бронирования
+     *
+     * @param userId            - пользователя
+     * @param bookingDtoRequest - запрос на бронирование
+     * @return - возвращает добавленное в Б/Д бронирование
+     */
     @Override
     public Booking addBooking(long userId, BookingDtoRequest bookingDtoRequest) {
         checkUser(userId);
@@ -89,6 +97,13 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new NotFoundException("Не найдено бронирование с  id " + bookingId));
     }
 
+    /**
+     * Метод получения данных о конкретном бронировании, может быть выполнено либо автором бронирования, либо владельцем вещи
+     *
+     * @param bookingId - бронирования
+     * @param userId    - пользователя
+     * @return - возвращает бронирование
+     */
     @Override
     public Booking getBooking(long bookingId, long userId) {
         checkUser(userId);
@@ -102,12 +117,19 @@ public class BookingServiceImpl implements BookingService {
         return booking;
     }
 
+    /**
+     * Метод получения списка всех бронирований текущего пользователя
+     *
+     * @param userId - пользователя
+     * @param status - статус
+     * @return - список всех бронирований
+     */
     @Override
     public List<Booking> getUserBookings(long userId, String status) {
         checkUser(userId);
         User user = userService.getUserById(userId);
         LocalDateTime dateTime = LocalDateTime.now();
-        List<Booking> bookingList = new ArrayList<>();
+        List<Booking> bookingList;
         switch (status) {
             case "ALL":
                 bookingList = bookingRepository.findAllByBookingUserOrderByStartDesc(user);
@@ -138,12 +160,19 @@ public class BookingServiceImpl implements BookingService {
         return bookingList;
     }
 
+    /**
+     * Метод получения списка бронирований для всех вещей текущего пользователя
+     *
+     * @param userId - пользователя
+     * @param status -статус
+     * @return - список всех бронирований
+     */
     @Override
     public List<Booking> getUserItems(long userId, String status) {
         checkUser(userId);
         User user = userService.getUserById(userId);
         LocalDateTime dateTime = LocalDateTime.now();
-        List<Booking> bookingList = new ArrayList<>();
+        List<Booking> bookingList;
         switch (status) {
             case "ALL":
                 bookingList = bookingRepository.findAllByItemOwnerOrderByStartDesc(user);
@@ -173,7 +202,11 @@ public class BookingServiceImpl implements BookingService {
         return bookingList;
     }
 
-
+    /**
+     * Метод бля проверки пользователя в Б/Д
+     *
+     * @param checkId - пользователя
+     */
     private void checkUser(long checkId) {
         if (!userRepository.existsById(checkId)) {
             log.info("Пользователя с таким id = " + checkId + " не существует");

@@ -5,9 +5,11 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
+/**
+ * Класс - сущность комментариев
+ */
 @Entity
 @Table(name = "comments")
 @Data

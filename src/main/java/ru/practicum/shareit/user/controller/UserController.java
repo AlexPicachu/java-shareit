@@ -15,6 +15,10 @@ import java.util.stream.Collectors;
 /**
  * TODO Sprint add-controllers.
  */
+
+/**
+ * Класс контроллер, для принятия входящих запросов к сущности User
+ */
 @RestController
 @RequestMapping(path = "/users")
 @RequiredArgsConstructor

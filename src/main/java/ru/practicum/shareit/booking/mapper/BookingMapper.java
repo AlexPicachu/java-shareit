@@ -12,8 +12,17 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.model.User;
 
+/**
+ * Класс Mapper, для преобразования Booking в ответ и запрос
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookingMapper {
+    /**
+     * Метод преобразовывает Booking в BookingDtoResp
+     *
+     * @param booking - получаемый из Б/Д
+     * @return - возвращает BookingDtoResp
+     */
     public static BookingDtoResp toResponse(Booking booking) {
         ItemDto itemDto = ItemDto.builder()
                 .id(booking.getItem().getId())
@@ -34,6 +43,15 @@ public class BookingMapper {
                 .build();
     }
 
+    /**
+     * Метод преобразовывает входные параметры в Booking
+     *
+     * @param bookingDtoRequest - сущность полученная от пользователя
+     * @param item              - бронируемая вещь
+     * @param user              - пользователь
+     * @param bookingStatus     - статус бронируемой вещи
+     * @return - возвращает Booking для записи в Б/Д
+     */
     public static Booking toBooking(BookingDtoRequest bookingDtoRequest, Item item, User user, BookingStatus bookingStatus) {
 
         return Booking.builder()
@@ -45,7 +63,13 @@ public class BookingMapper {
                 .build();
     }
 
-    public static BookingShort toBookingShort(Booking booking){
+    /**
+     * Метод для преобразования Booking в короткий ответ
+     *
+     * @param booking - сущность бронирования
+     * @return - возвращает BookingShort
+     */
+    public static BookingShort toBookingShort(Booking booking) {
 
         return BookingShort.builder()
                 .id(booking.getId())

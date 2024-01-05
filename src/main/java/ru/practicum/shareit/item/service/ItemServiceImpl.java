@@ -18,7 +18,6 @@ import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.user.model.User;
-import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.user.service.UserService;
 
 import java.time.LocalDateTime;
@@ -35,8 +34,6 @@ import java.util.stream.Collectors;
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserService userService;
-
-    private final UserRepository userRepository;
     private final CommentRepository commentRepository;
 
     private final BookingRepository bookingRepository;
@@ -75,7 +72,6 @@ public class ItemServiceImpl implements ItemService {
         }
         User user = userService.getUserById(userId);
         Item item = ItemMapper.toItemWithId(id, user, itemDto);
-        // Item oldItem = getItem(id, userId);
         if (item.getName() == null) {
             item.setName(oldItem.getName());
         }
@@ -143,17 +139,14 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Comment addComment(long userId, long itemId, CommentDtoInput commentDtoInput) {
-//        User checkUser = userRepository.findById(userId)
-//                .orElseThrow(() -> new ValidationException("Пользователя с таким id = " + userId + "  не существует"));
         checkUser(userId);
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Вещи с таким id = " + itemId + "  не существует"));
-        User user =  userService.getUserById(userId);
+        User user = userService.getUserById(userId);
         Comment comment;
-        if (bookingRepository.findFirstByBookingUserIdAndItemIdAndEndIsBeforeOrderByEndDesc(userId, itemId, LocalDateTime.now()) != null){
+        if (bookingRepository.findFirstByBookingUserIdAndItemIdAndEndIsBeforeOrderByEndDesc(userId, itemId, LocalDateTime.now()) != null) {
             comment = CommentMapper.toComment(commentDtoInput, item, user);
-        }
-        else {
+        } else {
             throw new ValidationException("Пользователь не может оставить комментарий");
         }
         return commentRepository.save(comment);
@@ -171,6 +164,13 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
+    /**
+     * Метод для добавления в item новых сущностей
+     *
+     * @param item   - вещь
+     * @param userId - пользователя
+     * @return - возвращает вещь с добавленными комментариями и бронированием
+     */
     private ItemWithCommentsAndBookings addNewEntity(Item item, long userId) {
         LocalDateTime now = LocalDateTime.now();
         Booking lastBook = bookingRepository.findFirstByItemIdAndStartIsBeforeOrStartEqualsOrderByStartDesc(item.getId(), now, now);

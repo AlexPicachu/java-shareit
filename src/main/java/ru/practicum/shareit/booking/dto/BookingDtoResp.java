@@ -15,6 +15,10 @@ import java.time.LocalDateTime;
 /**
  * TODO Sprint add-bookings.
  */
+
+/**
+ * Класс для получения запроса бронирования
+ */
 @Data
 @Builder
 public class BookingDtoResp {

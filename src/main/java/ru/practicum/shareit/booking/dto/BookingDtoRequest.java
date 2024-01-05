@@ -8,6 +8,9 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * Класс преобразующий Booking в ответ BookingDtoRequest
+ */
 @Data
 @Builder
 public class BookingDtoRequest {
