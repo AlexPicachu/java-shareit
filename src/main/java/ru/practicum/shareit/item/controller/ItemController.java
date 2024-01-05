@@ -2,10 +2,15 @@ package ru.practicum.shareit.item.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.comment.CommentDto;
+import ru.practicum.shareit.item.comment.CommentDtoInput;
+import ru.practicum.shareit.item.comment.CommentMapper;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemMapper;
+import ru.practicum.shareit.item.dto.ItemWithCommentsAndBookings;
+import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
+
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,6 +25,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ItemController {
     private final ItemService itemService;
+
 
     private static final String USER_ID = "X-Sharer-User-Id";
 
@@ -45,24 +51,21 @@ public class ItemController {
     }
 
     /**
-     * Метод возвращает вещь конкретного пользователя
+     * Метод возвращает вещь конкретного пользователя и комментарии к ней
      * id вещи
      * userId пользователя
      */
     @GetMapping("/{id}")
-    public ItemDto getItemById(@PathVariable long id, @RequestHeader(USER_ID) long userId) {
-        Item item = itemService.getItem(id, userId);
-        return ItemMapper.toItemDto(item);
+    public ItemWithCommentsAndBookings getItemById(@PathVariable long id, @RequestHeader(USER_ID) long userId) {
+        return itemService.getItem(id, userId);
     }
 
     /**
-     * Метод возвращает список вещей пользователя по его id
+     * Метод возвращает список вещей и комментарии к ним, пользователя по его id
      */
     @GetMapping
-    public List<ItemDto> getUserAllItems(@RequestHeader(USER_ID) long userId) {
-        return itemService.getUserItems(userId).stream()
-                .map(ItemMapper::toItemDto)
-                .collect(Collectors.toList());
+    public List<ItemWithCommentsAndBookings> getUserAllItems(@RequestHeader(USER_ID) Long userId) {
+        return itemService.getUserItems(userId);
     }
 
     /**
@@ -74,5 +77,15 @@ public class ItemController {
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Метод создает новый комментарий и возвращает его в формате commentDto
+     */
+    @PostMapping("/{itemId}/comment")
+    public CommentDto addComment(@PathVariable long itemId,
+            @RequestHeader(USER_ID) long userId, @Valid @RequestBody CommentDtoInput commentDtoInput) {
+        return CommentMapper.toCommentDto(itemService.addComment(userId, itemId, commentDtoInput));
+    }
+
 
 }
