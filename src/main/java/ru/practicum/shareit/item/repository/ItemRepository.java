@@ -10,5 +10,5 @@ import java.util.List;
  * Контракт для реализации JpaRepository
  */
 public interface ItemRepository extends JpaRepository<Item, Long> {
-List<Item> findAllByOwner(User user);
+    List<Item> findAllByOwner(User user);
 }

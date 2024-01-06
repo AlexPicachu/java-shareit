@@ -7,6 +7,9 @@ import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
 
+/**
+ * Класс Mapper, преобразовывает Comment в CommentDto и обратно
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommentMapper {
 

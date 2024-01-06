@@ -9,10 +9,6 @@ import javax.persistence.*;
 
 
 /**
- * TODO Sprint add-controllers.
- */
-
-/**
  * Модель пользователя
  */
 @Entity

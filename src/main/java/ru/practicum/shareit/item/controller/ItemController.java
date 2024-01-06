@@ -16,9 +16,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * TODO Sprint add-controllers.
- */
 
 /**
  * Класс контроллер, для принятия запросов сущности Item
@@ -27,10 +24,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/items")
 @AllArgsConstructor
 public class ItemController {
+    private static final String USER_ID = "X-Sharer-User-Id";
+
     private final ItemService itemService;
 
-
-    private static final String USER_ID = "X-Sharer-User-Id";
 
     /**
      * Метод добавляет новую вещь
@@ -86,7 +83,7 @@ public class ItemController {
      */
     @PostMapping("/{itemId}/comment")
     public CommentDto addComment(@PathVariable long itemId,
-            @RequestHeader(USER_ID) long userId, @Valid @RequestBody CommentDtoInput commentDtoInput) {
+                                 @RequestHeader(USER_ID) long userId, @Valid @RequestBody CommentDtoInput commentDtoInput) {
         return CommentMapper.toCommentDto(itemService.addComment(userId, itemId, commentDtoInput));
     }
 

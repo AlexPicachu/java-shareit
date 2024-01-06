@@ -31,7 +31,7 @@ public interface ItemService {
     /**
      * Метод возвращает все вещи конкретного пользователя
      */
-        List<ItemWithCommentsAndBookings> getUserItems(Long userId);
+    List<ItemWithCommentsAndBookings> getUserItems(Long userId);
 
     /**
      * Метод поиска вещей
@@ -39,7 +39,7 @@ public interface ItemService {
     List<Item> searchItem(String text);
 
     /**
-     *Метод для создания нового комментария
+     * Метод для создания нового комментария
      */
     Comment addComment(long userId, long itemId, CommentDtoInput commentDtoInput);
 }

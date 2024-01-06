@@ -13,19 +13,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * TODO Sprint add-bookings.
- */
-
-/**
  * класс контроллер для обработки запросов бронирования
  */
 @RestController
 @RequestMapping(path = "/bookings")
 @AllArgsConstructor
 public class BookingController {
+    private static final String USER_ID = "X-Sharer-User-Id";
 
     private final BookingService bookingService;
-    private static final String USER_ID = "X-Sharer-User-Id";
+
 
     /**
      * Метод добавления нового запроса на бронирование
