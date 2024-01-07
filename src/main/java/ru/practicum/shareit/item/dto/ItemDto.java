@@ -8,10 +8,6 @@ import javax.validation.constraints.NotNull;
 
 
 /**
- * TODO Sprint add-controllers.
- */
-
-/**
  * класс DTO(Data Transfer Object)
  */
 @Data

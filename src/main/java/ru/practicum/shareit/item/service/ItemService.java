@@ -1,6 +1,9 @@
 package ru.practicum.shareit.item.service;
 
+import ru.practicum.shareit.item.comment.Comment;
+import ru.practicum.shareit.item.comment.CommentDtoInput;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.ItemWithCommentsAndBookings;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.List;
@@ -21,17 +24,22 @@ public interface ItemService {
     Item updateItem(long id, long userId, ItemDto item);
 
     /**
-     * Метод возвращает вещт конкретного пользователя
+     * Метод возвращает вещь конкретного пользователя
      */
-    Item getItem(long id, long userId);
+    ItemWithCommentsAndBookings getItem(long id, long userId);
 
     /**
      * Метод возвращает все вещи конкретного пользователя
      */
-    List<Item> getUserItems(long userId);
+    List<ItemWithCommentsAndBookings> getUserItems(Long userId);
 
     /**
      * Метод поиска вещей
      */
     List<Item> searchItem(String text);
+
+    /**
+     * Метод для создания нового комментария
+     */
+    Comment addComment(long userId, long itemId, CommentDtoInput commentDtoInput);
 }
