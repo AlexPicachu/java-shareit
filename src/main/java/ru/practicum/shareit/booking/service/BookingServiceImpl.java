@@ -2,6 +2,8 @@ package ru.practicum.shareit.booking.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.dto.BookingDtoRequest;
 import ru.practicum.shareit.booking.enums.BookingStatus;
@@ -125,32 +127,33 @@ public class BookingServiceImpl implements BookingService {
      * @return - список всех бронирований
      */
     @Override
-    public List<Booking> getUserBookings(long userId, String status) {
+    public List<Booking> getUserBookings(long userId, String status, Integer from, Integer size) {
         checkUser(userId);
         User user = userService.getUserById(userId);
         LocalDateTime dateTime = LocalDateTime.now();
+        Pageable pageable = PageRequest.of(from / size, size);
         List<Booking> bookingList;
         switch (status) {
             case "ALL":
-                bookingList = bookingRepository.findAllByBookingUserOrderByStartDesc(user);
+                bookingList = bookingRepository.findAllByBookingUserOrderByStartDesc(user, pageable);
                 break;
             case "CURRENT":
                 bookingList = bookingRepository.findAllByBookingUserAndStartIsBeforeAndEndIsAfterOrderByStart(user,
-                        dateTime, dateTime);
+                        dateTime, dateTime, pageable);
                 break;
             case "FUTURE":
-                bookingList = bookingRepository.findAllByBookingUserAndStartIsAfterOrderByStartDesc(user, dateTime);
+                bookingList = bookingRepository.findAllByBookingUserAndStartIsAfterOrderByStartDesc(user, dateTime, pageable);
                 break;
             case "PAST":
-                bookingList = bookingRepository.findAllByBookingUserAndEndIsBeforeOrderByStartDesc(user, dateTime);
+                bookingList = bookingRepository.findAllByBookingUserAndEndIsBeforeOrderByStartDesc(user, dateTime, pageable);
                 break;
             case "WAITING":
                 bookingList = bookingRepository.findAllByBookingUserAndStatusEqualsOrderByStartDesc(user,
-                        BookingStatus.WAITING);
+                        BookingStatus.WAITING, pageable);
                 break;
             case "REJECTED":
                 bookingList = bookingRepository.findAllByBookingUserAndStatusEqualsOrderByStartDesc(user,
-                        BookingStatus.REJECTED);
+                        BookingStatus.REJECTED, pageable);
                 break;
             default:
                 log.info("Передан неверный статус");
@@ -168,32 +171,33 @@ public class BookingServiceImpl implements BookingService {
      * @return - список всех бронирований
      */
     @Override
-    public List<Booking> getUserItems(long userId, String status) {
+    public List<Booking> getUserItems(long userId, String status, Integer from, Integer size) {
         checkUser(userId);
         User user = userService.getUserById(userId);
         LocalDateTime dateTime = LocalDateTime.now();
+        Pageable pageable = PageRequest.of(from / size, size);
         List<Booking> bookingList;
         switch (status) {
             case "ALL":
-                bookingList = bookingRepository.findAllByItemOwnerOrderByStartDesc(user);
+                bookingList = bookingRepository.findAllByItemOwnerOrderByStartDesc(user, pageable);
                 break;
             case "CURRENT":
                 bookingList = bookingRepository.findAllByItemOwnerAndStartIsBeforeAndEndIsAfterOrderByStart(user,
-                        dateTime, dateTime);
+                        dateTime, dateTime, pageable);
                 break;
             case "FUTURE":
-                bookingList = bookingRepository.findAllByItemOwnerAndStartIsAfterOrderByStartDesc(user, dateTime);
+                bookingList = bookingRepository.findAllByItemOwnerAndStartIsAfterOrderByStartDesc(user, dateTime, pageable);
                 break;
             case "PAST":
-                bookingList = bookingRepository.findAllByItemOwnerAndEndIsBeforeOrderByStartDesc(user, dateTime);
+                bookingList = bookingRepository.findAllByItemOwnerAndEndIsBeforeOrderByStartDesc(user, dateTime, pageable);
                 break;
             case "WAITING":
                 bookingList = bookingRepository.findAllByItemOwnerAndStatusEqualsOrderByStartDesc(user,
-                        BookingStatus.WAITING);
+                        BookingStatus.WAITING, pageable);
                 break;
             case "REJECTED":
                 bookingList = bookingRepository.findAllByItemOwnerAndStatusEqualsOrderByStartDesc(user,
-                        BookingStatus.REJECTED);
+                        BookingStatus.REJECTED, pageable);
                 break;
             default:
                 log.info("Передан неверный статус");

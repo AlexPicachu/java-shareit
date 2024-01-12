@@ -1,6 +1,7 @@
 package ru.practicum.shareit.item.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.comment.CommentDto;
 import ru.practicum.shareit.item.comment.CommentDtoInput;
@@ -13,6 +14,8 @@ import ru.practicum.shareit.item.service.ItemService;
 
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,16 +67,20 @@ public class ItemController {
      * Метод возвращает список вещей и комментарии к ним, пользователя по его id
      */
     @GetMapping
-    public List<ItemWithCommentsAndBookings> getUserAllItems(@RequestHeader(USER_ID) Long userId) {
-        return itemService.getUserItems(userId);
+    public List<ItemWithCommentsAndBookings> getUserAllItems(@RequestHeader(USER_ID) Long userId,
+                                                             @RequestParam(defaultValue = "1") @Min(1) Integer from,
+                                                             @RequestParam(defaultValue = "20") @Min(1) @Max(20) Integer size) {
+        return itemService.getUserItems(userId, from, size);
     }
 
     /**
      * Метод возвращает список найденный вещей по запросу переданному в аргументе text
      */
     @GetMapping("/search")
-    public List<ItemDto> searchItem(@RequestParam(name = "text") String text) {
-        return itemService.searchItem(text).stream()
+    public List<ItemDto> searchItem(@RequestParam(name = "text") String text,
+                                    @RequestParam(defaultValue = "1") @Min(1) Integer from,
+                                    @RequestParam(defaultValue = "20") @Min(1) @Max(20) Integer size) {
+        return itemService.searchItem(text, from, size).stream()
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());
     }

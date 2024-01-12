@@ -45,7 +45,7 @@ public interface BookingService {
      * @param status - статус
      * @return - список всех бронирований
      */
-    List<Booking> getUserBookings(long userId, String status);
+    List<Booking> getUserBookings(long userId, String status, Integer from, Integer size);
 
     /**
      * Метод получения списка бронирований для всех вещей текущего пользователя
@@ -54,6 +54,6 @@ public interface BookingService {
      * @param status -статус
      * @return - список всех бронирований
      */
-    List<Booking> getUserItems(long userId, String status);
+    List<Booking> getUserItems(long userId, String status, Integer from, Integer size);
 
 }
