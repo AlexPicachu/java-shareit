@@ -49,7 +49,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
                 .collect(Collectors.toList());
 
     }
-
+    // получить список запросов, созданных другими пользователями
     @Override
     public List<ItemRequestResponse> getListOfOtherUsersRequests(long userId, Integer from, Integer size) {
         User user = userRepository.findById(userId)
@@ -61,7 +61,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
                 .map(itemRequest -> ItemRequestMapper.toItemRequestResponse(itemRequest, findItems(itemRequest)))
                 .collect(Collectors.toList());
     }
-
+//получить данные об одном конкретном запросе вместе с данными об ответах на него
     @Override
     public ItemRequestResponse getItemRequest(long requestId, long userId) {
         User user = userRepository.findById(userId)

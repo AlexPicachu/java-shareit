@@ -57,7 +57,7 @@ public class ItemRequestController {
      */
     @GetMapping("/all")
     public List<ItemRequestResponse> getListOfOtherUsersRequests(@RequestHeader(USER_ID) long userId,
-                                                                 @RequestParam(defaultValue = "1") @Min(1) Integer from,
+                                                                @RequestParam(defaultValue = "1") @Min(1) Integer from,
                                                                  @RequestParam(defaultValue = "20") @Min(1) @Max(20) Integer size) {
 
         return itemRequestService.getListOfOtherUsersRequests(userId, from, size);

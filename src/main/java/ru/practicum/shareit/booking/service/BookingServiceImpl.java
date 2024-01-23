@@ -43,14 +43,17 @@ public class BookingServiceImpl implements BookingService {
      */
     @Override
     public Booking addBooking(long userId, BookingDtoRequest bookingDtoRequest) {
-        checkUser(userId);
+       // checkUser(userId);
+       // User user = userService.getUserById(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Пользователя с таким id = " + userId + "  не существует"));
         LocalDateTime start = bookingDtoRequest.getStart();
         LocalDateTime end = bookingDtoRequest.getEnd();
         if (start.isAfter(end) || start.equals(end)) {
             log.info("Некорректно заданы параметры бронирования");
             throw new ValidationException("Некорректно заданы параметры бронирования");
         }
-        User user = userService.getUserById(userId);
+
         Item item = itemRepository.findById(bookingDtoRequest.getItemId())
                 .orElseThrow(() -> new NotFoundException("Не найдена вещь с  id " + bookingDtoRequest.getItemId()));
         if (user.getId() == item.getOwner().getId()) {
@@ -76,7 +79,9 @@ public class BookingServiceImpl implements BookingService {
      */
     @Override
     public Booking getStatus(long bookingId, long userId, Boolean approved) {
-        checkUser(userId);
+       // checkUser(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Пользователя с таким id = " + userId + "  не существует"));
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Не найдено бронирование с  id " + bookingId));
         Item item = booking.getItem();
@@ -108,7 +113,9 @@ public class BookingServiceImpl implements BookingService {
      */
     @Override
     public Booking getBooking(long bookingId, long userId) {
-        checkUser(userId);
+       // checkUser(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Пользователя с таким id = " + userId + "  не существует"));
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Не найдено бронирование с  id " + bookingId));
         Item item = booking.getItem();
@@ -128,8 +135,10 @@ public class BookingServiceImpl implements BookingService {
      */
     @Override
     public List<Booking> getUserBookings(long userId, String status, Integer from, Integer size) {
-        checkUser(userId);
-        User user = userService.getUserById(userId);
+//        checkUser(userId);
+//        User user = userService.getUserById(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Пользователя с таким id = " + userId + "  не существует"));
         LocalDateTime dateTime = LocalDateTime.now();
         Pageable pageable = PageRequest.of(from / size, size);
         List<Booking> bookingList;
@@ -172,8 +181,10 @@ public class BookingServiceImpl implements BookingService {
      */
     @Override
     public List<Booking> getUserItems(long userId, String status, Integer from, Integer size) {
-        checkUser(userId);
-        User user = userService.getUserById(userId);
+       // checkUser(userId);
+      //  User user = userService.getUserById(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Пользователя с таким id = " + userId + "  не существует"));
         LocalDateTime dateTime = LocalDateTime.now();
         Pageable pageable = PageRequest.of(from / size, size);
         List<Booking> bookingList;
