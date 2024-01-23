@@ -44,6 +44,7 @@ class CommentRepositoryTest {
                 .name("alex")
                 .build();
         userRepository.save(user);
+
         requestor = User.builder()
                 .email("r@mail.ru")
                 .name("r")
