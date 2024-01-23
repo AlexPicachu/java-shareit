@@ -87,6 +87,7 @@ class BookingControllerTest {
                 .start(LocalDateTime.now().plusHours(1))
                 .end(LocalDateTime.now().plusDays(1))
                 .build();
+
         booking = BookingMapper.toBooking(bookingDtoRequest, item, bookingUser, BookingStatus.WAITING);
         bookingDtoResp = BookingMapper.toResponse(booking);
 
