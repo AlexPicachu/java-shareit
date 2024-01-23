@@ -37,10 +37,10 @@ class UserControllerTest {
 
     private UserDto userDto;
     private UserDto userDto1;
-    private  User user;
+    private User user;
 
     @BeforeEach
-    void setUpp(){
+    void setUpp() {
         userDto = UserDto.builder()
                 .id(1L)
                 .email("alex@yandex.ru")
@@ -51,7 +51,7 @@ class UserControllerTest {
                 .email("alexander@yandex.ru")
                 .name("alexander")
                 .build();
-         user = User.builder()
+        user = User.builder()
                 .id(1L)
                 .email("alex@yandex.ru")
                 .name("alex")
