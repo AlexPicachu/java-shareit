@@ -46,11 +46,13 @@ class UserControllerTest {
                 .email("alex@yandex.ru")
                 .name("alex")
                 .build();
+
         userDto1 = UserDto.builder()
                 .id(2L)
                 .email("alexander@yandex.ru")
                 .name("alexander")
                 .build();
+
         user = User.builder()
                 .id(1L)
                 .email("alex@yandex.ru")
