@@ -2,8 +2,9 @@ package ru.practicum.shareit.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,11 +15,9 @@ import ru.practicum.shareit.user.mapper.UserMapper;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.service.UserService;
 
-import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -36,19 +35,32 @@ class UserControllerTest {
     @MockBean
     private UserService userService;
 
-    @SneakyThrows
-    @Test
-    void getAllUserTest() {
-        UserDto userDto = UserDto.builder()
+    private UserDto userDto;
+    private UserDto userDto1;
+    private  User user;
+
+    @BeforeEach
+    void setUpp(){
+        userDto = UserDto.builder()
                 .id(1L)
                 .email("alex@yandex.ru")
                 .name("alex")
                 .build();
-        UserDto userDto1 = UserDto.builder()
+        userDto1 = UserDto.builder()
                 .id(2L)
                 .email("alexander@yandex.ru")
                 .name("alexander")
                 .build();
+         user = User.builder()
+                .id(1L)
+                .email("alex@yandex.ru")
+                .name("alex")
+                .build();
+    }
+
+    @SneakyThrows
+    @Test
+    void getAllUserTest() {
         List<UserDto> users = List.of(userDto, userDto1);
 
         when(userService.getAllUsers())
@@ -61,18 +73,11 @@ class UserControllerTest {
                 .andExpect(jsonPath("$[0].id").value(userDto.getId()))
                 .andExpect(jsonPath("$[1].name").value(userDto1.getName()));
 
-
     }
 
     @SneakyThrows
     @Test
     void createUser_whenInputUserValid_thenReturnSavesUser() {
-        UserDto userDto = UserDto.builder()
-                .id(1L)
-                .email("alex@yandex.ru")
-                .name("alex")
-                .build();
-
         when(userService.createUser(UserMapper.dtoToUser(userDto)))
                 .thenReturn(UserMapper.dtoToUser(userDto));
 
@@ -88,17 +93,17 @@ class UserControllerTest {
     @SneakyThrows
     @Test
     void createUser_whenInputUserNotValid_thenReturnThrows() {
-        UserDto userDto = UserDto.builder()
+        UserDto userDto3 = UserDto.builder()
                 .id(1L)
                 .email(null)
                 .name("alex")
                 .build();
-        mockMvc.perform(post("/users", userDto)
+        mockMvc.perform(post("/users", userDto3)
                         .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(userDto)))
+                        .content(objectMapper.writeValueAsString(userDto3)))
                 .andDo(print())
                 .andExpect(status().isBadRequest());
-        verify(userService, never()).createUser(UserMapper.dtoToUser(userDto));
+        verify(userService, never()).createUser(UserMapper.dtoToUser(userDto3));
 
     }
 
@@ -106,21 +111,21 @@ class UserControllerTest {
     @Test
     void updateUserById() {
         long userId = 1L;
-        UserDto userDto = UserDto.builder()
+        UserDto userDto3 = UserDto.builder()
                 .id(1L)
                 .email(null)
                 .name("alex")
                 .build();
-        User user = UserMapper.dtoToUser(userDto);
-        when(userService.updateUser(UserMapper.userDtoToUserByid(userId, userDto)))
-                .thenReturn(UserMapper.dtoToUser(userDto));
+
+        when(userService.updateUser(UserMapper.userDtoToUserByid(userId, userDto3)))
+                .thenReturn(UserMapper.dtoToUser(userDto3));
         mockMvc.perform(patch("/users/{id}", userId)
                         .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(userDto)))
+                        .content(objectMapper.writeValueAsString(userDto3)))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(userDto.getName()));
-        verify(userService, times(1)).updateUser(UserMapper.userDtoToUserByid(userId, userDto));
+                .andExpect(jsonPath("$.name").value(userDto3.getName()));
+        verify(userService, times(1)).updateUser(UserMapper.userDtoToUserByid(userId, userDto3));
     }
 
     @SneakyThrows
@@ -134,12 +139,7 @@ class UserControllerTest {
 
     @Test
     void getUserById_whenUserFound_thenReturnUser() throws Exception {
-        User user = User.builder()
-                .id(1L)
-                .email("alex@yandex.ru")
-                .name("alex")
-                .build();
-        UserDto userDto = UserMapper.userToDto(user);
+        UserDto userDto3 = UserMapper.userToDto(user);
 
         when(userService.getUserById(user.getId()))
                 .thenReturn(user);
@@ -147,9 +147,9 @@ class UserControllerTest {
         mockMvc.perform(get("/users/{id}", user.getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(userDto.getId()))
-                .andExpect(jsonPath("$.name").value(userDto.getName()))
-                .andExpect(jsonPath("$.email").value(userDto.getEmail()));
+                .andExpect(jsonPath("$.id").value(userDto3.getId()))
+                .andExpect(jsonPath("$.name").value(userDto3.getName()))
+                .andExpect(jsonPath("$.email").value(userDto3.getEmail()));
         verify(userService).getUserById(user.getId());
     }
 }

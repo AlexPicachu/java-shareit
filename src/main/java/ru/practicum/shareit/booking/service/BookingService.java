@@ -43,6 +43,8 @@ public interface BookingService {
      *
      * @param userId - пользователя
      * @param status - статус
+     * @param from   - с которой страницы начать
+     * @param size   - длина страницы
      * @return - список всех бронирований
      */
     List<Booking> getUserBookings(long userId, String status, Integer from, Integer size);
@@ -52,6 +54,8 @@ public interface BookingService {
      *
      * @param userId - пользователя
      * @param status -статус
+     * @param from   - с которой страницы начать
+     * @param size   - длина страницы
      * @return - список всех бронирований
      */
     List<Booking> getUserItems(long userId, String status, Integer from, Integer size);

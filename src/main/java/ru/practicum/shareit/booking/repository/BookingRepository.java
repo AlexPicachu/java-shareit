@@ -17,7 +17,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findAllByBookingUserOrderByStartDesc(User user, Pageable pageable);
 
     List<Booking> findAllByBookingUserAndStartIsBeforeAndEndIsAfterOrderByStart(User user,
-                                                                                LocalDateTime now1, LocalDateTime now2, Pageable pageable);
+                                                                                LocalDateTime now1, LocalDateTime now2,
+                                                                                Pageable pageable);
 
     List<Booking> findAllByBookingUserAndStartIsAfterOrderByStartDesc(User user, LocalDateTime now, Pageable pageable);
 
@@ -28,7 +29,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findAllByItemOwnerOrderByStartDesc(User user, Pageable pageable);
 
     List<Booking> findAllByItemOwnerAndStartIsBeforeAndEndIsAfterOrderByStart(User user,
-                                                                              LocalDateTime now1, LocalDateTime now2, Pageable pageable);
+                                                                              LocalDateTime now1, LocalDateTime now2,
+                                                                              Pageable pageable);
 
     List<Booking> findAllByItemOwnerAndStartIsAfterOrderByStartDesc(User user, LocalDateTime now, Pageable pageable);
 

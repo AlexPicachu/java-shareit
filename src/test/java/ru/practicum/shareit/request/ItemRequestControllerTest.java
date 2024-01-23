@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -52,7 +51,7 @@ class ItemRequestControllerTest {
     private ItemRequestResponse response;
 
     @BeforeEach
-    void setApp() {
+    void setUpp() {
         user = User.builder()
                 .id(1L)
                 .email("alex@mail.ru")
@@ -114,13 +113,14 @@ class ItemRequestControllerTest {
         when(service.getAllMyRequests(user.getId())).thenReturn(responseList);
 
         mockMvc.perform(get("/requests", user.getId())
-                .header(USER_ID, "1"))
+                        .header(USER_ID, "1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(responseList.get(0).getId()))
                 .andExpect(jsonPath("$[0].description").value(responseList.get(0).getDescription()))
                 .andExpect(jsonPath("$[0].created").value(String.valueOf(responseList.get(0).getCreated())));
     }
+
     @SneakyThrows
     @Test
     void getListOfOtherUsersRequests_whenInputValueValid_thenReturnListItemRequestResponse() {
@@ -128,9 +128,9 @@ class ItemRequestControllerTest {
         when(service.getListOfOtherUsersRequests(anyLong(), anyInt(), anyInt())).thenReturn(responseList);
 
         mockMvc.perform(get("/requests/all", user.getId())
-                .header(USER_ID, "1")
-                .param("from", "1")
-                .param("size", "5"))
+                        .header(USER_ID, "1")
+                        .param("from", "1")
+                        .param("size", "5"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(responseList.get(0).getId()))
@@ -153,13 +153,14 @@ class ItemRequestControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest());
     }
+
     @SneakyThrows
     @Test
     void getItemRequest_whenUserIdValid_thenReturnItemRequestResponse() {
         when(service.getItemRequest(anyLong(), anyLong())).thenReturn(response);
 
         mockMvc.perform(get("/requests/{requestId}", user.getId())
-                .header(USER_ID, "1"))
+                        .header(USER_ID, "1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(response.getId()))

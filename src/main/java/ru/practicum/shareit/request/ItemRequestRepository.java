@@ -7,6 +7,9 @@ import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
 
+/**
+ * Контракт для реализации кастомных методов JpaRepository
+ */
 public interface ItemRequestRepository extends JpaRepository<ItemRequest, Long> {
 
     List<ItemRequest> findAllByRequestorOrderByCreatedDesc(User user);

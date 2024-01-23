@@ -25,9 +25,7 @@ import ru.practicum.shareit.user.model.User;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -53,7 +51,7 @@ class ItemControllerTest {
     private static String USER_ID = "X-Sharer-User-Id";
 
     @BeforeEach
-    void setApp() {
+    void setUpp() {
         itemRequest = ItemRequest.builder()
                 .id(1L)
                 .description("запрос")
@@ -233,7 +231,7 @@ class ItemControllerTest {
 
     @SneakyThrows
     @Test
-    void addComment_whenInputValueNotValid_thenReturnThrows(){
+    void addComment_whenInputValueNotValid_thenReturnThrows() {
         CommentDtoInput commentDtoInput = CommentDtoInput.builder()
                 .text("")
                 .build();

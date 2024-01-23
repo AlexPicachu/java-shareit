@@ -21,9 +21,12 @@ public class ItemMapper {
 
     /**
      * метод преобразовывает Item в ItemDto
+     *
+     * @param item - вещь из БД
+     * @return - вещь в формате ItemDto
      */
     public static ItemDto toItemDto(Item item) {
-        if (item.getRequest() == null){
+        if (item.getRequest() == null) {
             item.setRequest(new ItemRequest());
         }
         return ItemDto.builder()
@@ -38,6 +41,11 @@ public class ItemMapper {
 
     /**
      * метод преобразовывает ItemDto в Item
+     *
+     * @param user    - пользователь
+     * @param itemDto - вещь в формате itemDto пришедшая от пользователя или возвращаемая на фронт
+     * @param request - запрос на вещь
+     * @return - вещь
      */
     public static Item toItem(User user, ItemDto itemDto, ItemRequest request) {
         return Item.builder()
@@ -52,6 +60,11 @@ public class ItemMapper {
 
     /**
      * метод преобразовывает ItemDto в Item
+     *
+     * @param id      - вещи
+     * @param user    - пользователь
+     * @param itemDto - вещь в формате itemDto пришедшая от пользователя или возвращаемая на фронт
+     * @return - вещь
      */
     public static Item toItemWithId(long id, User user, ItemDto itemDto) {
         return Item.builder()
@@ -63,6 +76,15 @@ public class ItemMapper {
                 .build();
     }
 
+    /**
+     * Метод преобразовывает item в ItemWithCommentsAndBookings
+     *
+     * @param item       - вещь
+     * @param last       - бронирование
+     * @param next       - след.бронирование
+     * @param commentDto - список комментариев
+     * @return - вещь в формате ItemWithCommentsAndBookings с комментариями и бронированием
+     */
     public static ItemWithCommentsAndBookings toItemWithTime(Item item, BookingShort last, BookingShort next,
                                                              List<CommentDto> commentDto) {
         return ItemWithCommentsAndBookings.builder()

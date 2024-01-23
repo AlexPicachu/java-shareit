@@ -7,8 +7,7 @@ import ru.practicum.shareit.booking.dto.BookingDtoResp;
 import ru.practicum.shareit.booking.dto.BookingShort;
 import ru.practicum.shareit.booking.enums.BookingStatus;
 import ru.practicum.shareit.booking.model.Booking;
-import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.mapper.ItemMapper;
+
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.dto.ItemRequest;
 import ru.practicum.shareit.user.model.User;

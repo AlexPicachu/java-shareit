@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.ItemRequestRepository;
 import ru.practicum.shareit.request.dto.ItemRequest;
@@ -17,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @DataJpaTest
 class ItemRepositoryTest {
     @Autowired
@@ -31,7 +31,7 @@ class ItemRepositoryTest {
     private ItemRequest request;
 
     @BeforeEach
-    void setApp(){
+    void setUpp() {
         requestor = User.builder()
                 .email("r@mail.ru")
                 .name("r")
@@ -61,7 +61,7 @@ class ItemRepositoryTest {
 
     @Test
     void findAllByOwnerId() {
-        List<Item> itemList = itemRepository.findAllByOwnerId(user.getId(), PageRequest.of(0,5));
+        List<Item> itemList = itemRepository.findAllByOwnerId(user.getId(), PageRequest.of(0, 5));
         assertEquals(1, itemList.size());
         assertTrue(itemList.contains(item));
     }
@@ -80,8 +80,9 @@ class ItemRepositoryTest {
         assertEquals(1, itemList.size());
         assertEquals(text, itemList.get(0).getDescription());
     }
+
     @AfterEach
-    void delete(){
+    void delete() {
         userRepository.deleteAll();
         itemRepository.deleteAll();
         itemRequestRepository.deleteAll();

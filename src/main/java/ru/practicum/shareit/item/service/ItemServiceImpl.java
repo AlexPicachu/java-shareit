@@ -56,12 +56,12 @@ public class ItemServiceImpl implements ItemService {
         checkUser(userId);
         User user = userService.getUserById(userId);
         Item actualItem;
-        if (itemDto.getRequestId() != null){
+        if (itemDto.getRequestId() != null) {
             ItemRequest itemRequest = itemRequestRepository.findById(itemDto.getRequestId())
-                    .orElseThrow(() -> new NotFoundException("Вещи с таким id = " + itemDto.getRequestId() + "  не существует"));
+                    .orElseThrow(() -> new NotFoundException("Вещи с таким id = "
+                            + itemDto.getRequestId() + "  не существует"));
             actualItem = ItemMapper.toItem(user, itemDto, itemRequest);
-        }
-        else {
+        } else {
             actualItem = ItemMapper.toItemWithId(itemDto.getId(), user, itemDto);
         }
 
@@ -122,6 +122,8 @@ public class ItemServiceImpl implements ItemService {
      * Метод возвращает все вещи одного пользователя
      *
      * @param userId - пользователя
+     * @param from   - номер начальной страницы
+     * @param size   - длина страницы
      * @return - список вещей
      */
     @Override
@@ -139,6 +141,8 @@ public class ItemServiceImpl implements ItemService {
      * Метод для поиска вещей по названию или описанию
      *
      * @param text - название или описание
+     * @param from - номер начальной страницы
+     * @param size - длина страницы
      * @return - список вещей
      */
     @Override
@@ -146,16 +150,18 @@ public class ItemServiceImpl implements ItemService {
         if (text.isEmpty()) {
             return new ArrayList<>();
         }
-//        return itemRepository.findAll()
-//                .stream()
-//                .filter(item -> (item.getName().toLowerCase().contains(text.toLowerCase()) ||
-//                        item.getDescription().toLowerCase().contains(text.toLowerCase())))
-//                .filter(item -> item.getAvailable().equals(true))
-//                .collect(Collectors.toList());
         Pageable pageable = PageRequest.of(from / size, size);
         return itemRepository.searchWithPagination(text, pageable);
     }
 
+    /**
+     * Метод добавляет новый комментарий
+     *
+     * @param userId          - пользователя
+     * @param itemId          - вещи
+     * @param commentDtoInput - входящий комментарий в формате commentDtoInput
+     * @return
+     */
     @Override
     public Comment addComment(long userId, long itemId, CommentDtoInput commentDtoInput) {
         checkUser(userId);
@@ -163,7 +169,8 @@ public class ItemServiceImpl implements ItemService {
                 .orElseThrow(() -> new NotFoundException("Вещи с таким id = " + itemId + "  не существует"));
         User user = userService.getUserById(userId);
         Comment comment;
-        if (bookingRepository.findFirstByBookingUserIdAndItemIdAndEndIsBeforeOrderByEndDesc(userId, itemId, LocalDateTime.now()) != null) {
+        if (bookingRepository.findFirstByBookingUserIdAndItemIdAndEndIsBeforeOrderByEndDesc(userId, itemId,
+                LocalDateTime.now()) != null) {
             comment = CommentMapper.toComment(commentDtoInput, item, user);
         } else {
             throw new ValidationException("Пользователь не может оставить комментарий");

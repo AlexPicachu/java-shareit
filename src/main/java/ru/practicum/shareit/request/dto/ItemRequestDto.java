@@ -5,7 +5,9 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-
+/**
+ * Класс DTO - входящего запроса вещи
+ */
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

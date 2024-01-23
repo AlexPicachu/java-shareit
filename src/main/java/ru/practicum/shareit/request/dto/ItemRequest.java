@@ -6,11 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.shareit.user.model.User;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
+/**
+ * Класс сущность - запроса вещи
+ */
 @Data
 @Builder
 @NoArgsConstructor

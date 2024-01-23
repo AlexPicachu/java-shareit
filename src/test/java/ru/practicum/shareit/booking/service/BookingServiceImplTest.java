@@ -21,7 +21,6 @@ import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.request.dto.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
-import ru.practicum.shareit.user.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -54,7 +53,7 @@ class BookingServiceImplTest {
 
 
     @BeforeEach
-    void setApp() {
+    void setUpp() {
         user = User.builder()
                 .id(1L)
                 .email("alex@mail.ru")
@@ -208,13 +207,14 @@ class BookingServiceImplTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(bookingRepository.findAllByBookingUserOrderByStartDesc(user, pageable)).thenReturn(list);
         List<Booking> orderBooking = bookingService.getUserBookings(user.getId(), "ALL", from, size);
-       assertFalse(orderBooking.isEmpty());
-       assertEquals(1, orderBooking.size(), "Некорректно отработал метод");
-       verify(bookingRepository, never()).findAllByBookingUserAndStartIsBeforeAndEndIsAfterOrderByStart(user, dateTime, dateTime.plusDays(1), pageable);
+        assertFalse(orderBooking.isEmpty());
+        assertEquals(1, orderBooking.size(), "Некорректно отработал метод");
+        verify(bookingRepository, never()).findAllByBookingUserAndStartIsBeforeAndEndIsAfterOrderByStart(user, dateTime,
+                dateTime.plusDays(1), pageable);
     }
 
     @Test
-    void getUserBookings_whenStatusEqualsCURRENT_thenReturnBookingList(){
+    void getUserBookings_whenStatusEqualsCURRENT_thenReturnBookingList() {
         Integer from = 1;
         Integer size = 10;
         LocalDateTime dateTime = LocalDateTime.now();
@@ -222,7 +222,7 @@ class BookingServiceImplTest {
         List<Booking> list = List.of(booking);
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(bookingRepository.findAllByBookingUserAndStartIsBeforeAndEndIsAfterOrderByStart(any(User.class),
-                        any(LocalDateTime.class), any(LocalDateTime.class), any(Pageable.class)))
+                any(LocalDateTime.class), any(LocalDateTime.class), any(Pageable.class)))
                 .thenReturn(list);
         List<Booking> orderBooking = bookingService.getUserBookings(user.getId(), "CURRENT", from, size);
         assertFalse(orderBooking.isEmpty());
@@ -233,7 +233,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void getUserBookings_whenStatusEqualsFUTURE_thenReturnBookingList(){
+    void getUserBookings_whenStatusEqualsFUTURE_thenReturnBookingList() {
         List<Booking> list = List.of(booking);
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(bookingRepository.findAllByBookingUserAndStartIsAfterOrderByStartDesc(any(User.class),
@@ -249,7 +249,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void getUserBookings_whenStatusEqualsPAST_thenReturnBookingList(){
+    void getUserBookings_whenStatusEqualsPAST_thenReturnBookingList() {
         List<Booking> list = List.of(booking);
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(bookingRepository.findAllByBookingUserAndEndIsBeforeOrderByStartDesc(any(User.class),
@@ -265,7 +265,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void getUserBookings_whenStatusEqualsWAITING_thenReturnBookingList(){
+    void getUserBookings_whenStatusEqualsWAITING_thenReturnBookingList() {
         List<Booking> list = List.of(booking);
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(bookingRepository.findAllByBookingUserAndStatusEqualsOrderByStartDesc(any(User.class),
@@ -284,7 +284,7 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void getUserBookings_whenStatusEqualsREJECTED_thenReturnBookingList(){
+    void getUserBookings_whenStatusEqualsREJECTED_thenReturnBookingList() {
         List<Booking> list = List.of(booking);
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(bookingRepository.findAllByBookingUserAndStatusEqualsOrderByStartDesc(any(User.class),
@@ -304,9 +304,9 @@ class BookingServiceImplTest {
     }
 
     @Test
-    void getUserBookings_whenStatusNotValid_thenReturnThrows(){
+    void getUserBookings_whenStatusNotValid_thenReturnThrows() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
-        assertThrows(ValidationException.class,()-> bookingService.getUserBookings(user.getId(), "RRR", 1, 1));
+        assertThrows(ValidationException.class, () -> bookingService.getUserBookings(user.getId(), "RRR", 1, 1));
     }
 
     @Test
@@ -417,6 +417,7 @@ class BookingServiceImplTest {
         verify(bookingRepository, times(1)).findAllByItemOwnerAndStatusEqualsOrderByStartDesc(any(User.class),
                 any(BookingStatus.class), any(Pageable.class));
     }
+
     @Test
     void getUserItems_whenStatusEqualsREJECTED_thenReturnListBookings() {
         List<Booking> list = List.of(booking);
@@ -438,10 +439,11 @@ class BookingServiceImplTest {
         verify(bookingRepository, times(1)).findAllByItemOwnerAndStatusEqualsOrderByStartDesc(any(User.class),
                 any(BookingStatus.class), any(Pageable.class));
     }
+
     @Test
-    void getUserItems_whenStatusNotValid_thenReturnThrows(){
+    void getUserItems_whenStatusNotValid_thenReturnThrows() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
-        assertThrows(ValidationException.class, ()-> bookingService.getUserItems(user.getId(),
+        assertThrows(ValidationException.class, () -> bookingService.getUserItems(user.getId(),
                 "AAA", 1, 1));
     }
 

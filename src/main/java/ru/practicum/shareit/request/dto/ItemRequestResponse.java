@@ -6,6 +6,9 @@ import ru.practicum.shareit.item.dto.ItemDto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * класс для ответа пользователю
+ */
 @Generated
 @Data
 @Builder

@@ -17,6 +17,7 @@ import ru.practicum.shareit.user.model.User;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookingMapper {
+
     /**
      * Метод преобразовывает Booking в BookingDtoResp
      *
@@ -24,6 +25,7 @@ public class BookingMapper {
      * @return - возвращает BookingDtoResp
      */
     public static BookingDtoResp toResponse(Booking booking) {
+
         ItemDto itemDto = ItemDto.builder()
                 .id(booking.getItem().getId())
                 .name(booking.getItem().getName())

@@ -76,13 +76,15 @@ public class BookingController {
      *
      * @param userId - пользователя
      * @param state  -статус
+     * @param from   - с которой страницы начать
+     * @param size   - длина страницы
      * @return - список всех бронирований в формате BookingDtoResp
      */
     @GetMapping
     public List<BookingDtoResp> getAllBookingsUser(@RequestHeader(USER_ID) long userId,
                                                    @RequestParam(defaultValue = "ALL") String state,
                                                    @Valid @RequestParam(defaultValue = "1") @Min(1) Integer from,
-                                                   @Valid @RequestParam(defaultValue = "20") @Min(1) @Max(20) Integer size){
+                                                   @Valid @RequestParam(defaultValue = "20") @Min(1) @Max(20) Integer size) {
         List<Booking> bookings = bookingService.getUserBookings(userId, state, from, size);
         return bookings.stream()
                 .map(BookingMapper::toResponse)
@@ -94,6 +96,8 @@ public class BookingController {
      *
      * @param userId - пользователя
      * @param state  -статус
+     * @param from   - с которой страницы начать
+     * @param size   - длина страницы
      * @return - список всех бронирований в формате BookingDtoResp
      */
     @GetMapping("/owner")

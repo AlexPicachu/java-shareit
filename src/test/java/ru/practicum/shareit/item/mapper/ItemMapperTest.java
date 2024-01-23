@@ -24,7 +24,7 @@ class ItemMapperTest {
     private ItemDto itemDto;
 
     @BeforeEach
-    void setApp() {
+    void setUpp() {
         itemRequest = ItemRequest.builder()
                 .id(1L)
                 .description("запрос")
@@ -44,7 +44,7 @@ class ItemMapperTest {
                 .email("alex@yandex.ru")
                 .name("alex")
                 .build();
-        itemDto =   ItemDto.builder()
+        itemDto = ItemDto.builder()
                 .id(1L)
                 .name("рубанок")
                 .description("для обработки дерева")
@@ -68,7 +68,7 @@ class ItemMapperTest {
 
     @Test
     void toItemWithId() {
-        Item item1 =  ItemMapper.toItemWithId(item.getId(), user, itemDto);
+        Item item1 = ItemMapper.toItemWithId(item.getId(), user, itemDto);
         assertEquals(item1.getName(), itemDto.getName(), "некорректно отработал Mapper");
     }
 

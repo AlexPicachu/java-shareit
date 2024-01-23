@@ -12,7 +12,6 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.request.dto.ItemRequest;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
-import ru.practicum.shareit.request.dto.ItemRequestMapper;
 import ru.practicum.shareit.request.dto.ItemRequestResponse;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
@@ -45,7 +44,7 @@ class ItemRequestServiceImplTest {
     private ItemRequest itemRequest;
 
     @BeforeEach
-    void setUp() {
+    void setUpp() {
         itemRequestService = new ItemRequestServiceImpl(itemRequestRepository, userRepository, itemRepository);
         userOwner = User.builder()
                 .id(1L)
@@ -115,7 +114,7 @@ class ItemRequestServiceImplTest {
     void getAllMyRequests_whenUserIdNotValid_thenReturnThrows() {
         when(userRepository.findById(userOwner.getId()))
                 .thenThrow(NotFoundException.class);
-        assertThrows(NotFoundException.class, ()-> itemRequestService.getAllMyRequests(userOwner.getId()));
+        assertThrows(NotFoundException.class, () -> itemRequestService.getAllMyRequests(userOwner.getId()));
     }
 
     @Test
@@ -124,17 +123,17 @@ class ItemRequestServiceImplTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(userOwner));
         when(itemRequestRepository.findAllByRequestorNotOrderByCreatedDesc(any(User.class), any(Pageable.class)))
                 .thenReturn(list);
-    List<ItemRequestResponse> itemRequestResponseList = itemRequestService.getListOfOtherUsersRequests(userOwner.getId(), 1, 5);
-    assertFalse(itemRequestResponseList.isEmpty());
-    assertEquals(list.get(0).getId(), itemRequestResponseList.get(0).getId(), "Некорректно отработал метод");
-    assertEquals(list.get(0).getDescription(), itemRequestResponseList.get(0).getDescription(), "Некорректно отработал метод");
-    assertEquals(list.get(0).getCreated(), itemRequestResponseList.get(0).getCreated(), "Некорректно отработал метод");
+        List<ItemRequestResponse> itemRequestResponseList = itemRequestService.getListOfOtherUsersRequests(userOwner.getId(), 1, 5);
+        assertFalse(itemRequestResponseList.isEmpty());
+        assertEquals(list.get(0).getId(), itemRequestResponseList.get(0).getId(), "Некорректно отработал метод");
+        assertEquals(list.get(0).getDescription(), itemRequestResponseList.get(0).getDescription(), "Некорректно отработал метод");
+        assertEquals(list.get(0).getCreated(), itemRequestResponseList.get(0).getCreated(), "Некорректно отработал метод");
     }
 
     @Test
-    void getListOfOtherUsersRequests_whenInputValueNotValid_thenReturnItemRequestTrows(){
+    void getListOfOtherUsersRequests_whenInputValueNotValid_thenReturnItemRequestTrows() {
         when(userRepository.findById(anyLong())).thenThrow(NotFoundException.class);
-        assertThrows(NotFoundException.class, ()-> itemRequestService.getListOfOtherUsersRequests(userOwner.getId(), 1, 5));
+        assertThrows(NotFoundException.class, () -> itemRequestService.getListOfOtherUsersRequests(userOwner.getId(), 1, 5));
 
     }
 
@@ -150,15 +149,16 @@ class ItemRequestServiceImplTest {
     }
 
     @Test
-    void getItemRequest_whenUseridNotValid_thenReturnThrows(){
+    void getItemRequest_whenUseridNotValid_thenReturnThrows() {
         when(userRepository.findById(anyLong())).thenThrow(NotFoundException.class);
-        assertThrows(NotFoundException.class, ()-> itemRequestService.getItemRequest(itemRequest.getId(), userOwner.getId()));
+        assertThrows(NotFoundException.class, () -> itemRequestService.getItemRequest(itemRequest.getId(), userOwner.getId()));
     }
+
     @Test
-    void getItemRequest_whenRequestIdNotValid_thenReturnThrows(){
+    void getItemRequest_whenRequestIdNotValid_thenReturnThrows() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(userOwner));
         when(itemRequestRepository.findById(anyLong())).thenThrow(NotFoundException.class);
-        assertThrows(NotFoundException.class, ()-> itemRequestService.getItemRequest(itemRequest.getId(), userOwner.getId()));
+        assertThrows(NotFoundException.class, () -> itemRequestService.getItemRequest(itemRequest.getId(), userOwner.getId()));
     }
 
 

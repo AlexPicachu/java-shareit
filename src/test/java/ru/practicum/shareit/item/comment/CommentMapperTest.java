@@ -11,20 +11,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommentMapperTest {
 
 
-
     @Test
     void toCommentDto() {
-       Comment comment = Comment.builder()
-               .id(1L)
-               .text("text")
-               .item(new Item())
-               .author(new User())
-               .created(LocalDateTime.now())
-               .build();
-       CommentDto commentDto = CommentMapper.toCommentDto(comment);
-       assertEquals(comment.getId(), commentDto.getId(), "некорректно отработал Mapper");
-       assertEquals(comment.getAuthor().getName(), commentDto.getAuthorName(), "некорректно отработал Mapper");
-       assertEquals(comment.getText(), commentDto.getText(), "некорректно отработал Mapper");
+        Comment comment = Comment.builder()
+                .id(1L)
+                .text("text")
+                .item(new Item())
+                .author(new User())
+                .created(LocalDateTime.now())
+                .build();
+        CommentDto commentDto = CommentMapper.toCommentDto(comment);
+        assertEquals(comment.getId(), commentDto.getId(), "некорректно отработал Mapper");
+        assertEquals(comment.getAuthor().getName(), commentDto.getAuthorName(), "некорректно отработал Mapper");
+        assertEquals(comment.getText(), commentDto.getText(), "некорректно отработал Mapper");
     }
 
     @Test

@@ -1,7 +1,6 @@
 package ru.practicum.shareit.request;
 
 import lombok.AllArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.request.dto.ItemRequest;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
@@ -13,6 +12,9 @@ import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Класс контроллер для обработки запросов ItemRequest
+ */
 @RestController
 @RequestMapping(path = "/requests")
 @AllArgsConstructor
@@ -57,7 +59,7 @@ public class ItemRequestController {
      */
     @GetMapping("/all")
     public List<ItemRequestResponse> getListOfOtherUsersRequests(@RequestHeader(USER_ID) long userId,
-                                                                @RequestParam(defaultValue = "1") @Min(1) Integer from,
+                                                                 @RequestParam(defaultValue = "1") @Min(1) Integer from,
                                                                  @RequestParam(defaultValue = "20") @Min(1) @Max(20) Integer size) {
 
         return itemRequestService.getListOfOtherUsersRequests(userId, from, size);

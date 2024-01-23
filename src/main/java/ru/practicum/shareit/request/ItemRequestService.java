@@ -7,6 +7,9 @@ import ru.practicum.shareit.request.dto.ItemRequestResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Контракт для реализации ItemRequestServiceImpl
+ */
 public interface ItemRequestService {
     /**
      * Метод добавления новый запрос вещи

@@ -25,6 +25,7 @@ import ru.practicum.shareit.user.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -55,7 +56,7 @@ class BookingControllerTest {
     private ItemDto itemDto;
 
     @BeforeEach
-    void setApp() {
+    void setUpp() {
         itemRequest = ItemRequest.builder()
                 .id(1L)
                 .description("запрос")
@@ -175,6 +176,7 @@ class BookingControllerTest {
                 .andExpect(jsonPath("$[0].booker.id").value(String.valueOf(list.get(0).getBookingUser().getId())));
 
     }
+
     @SneakyThrows
     @Test
     void getAllBookingsUser_whenInputValueNotValid_thenReturnTrows() {
@@ -182,36 +184,37 @@ class BookingControllerTest {
         when(bookingService.getUserBookings(anyLong(), anyString(), anyInt(), anyInt())).thenReturn(list);
 
         mockMvc.perform(get("/bookings")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .header(USER_ID, "p")
-                .param("state", "ALL")
-                .param("from", "1")
-                .param("size", "20"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header(USER_ID, "p")
+                        .param("state", "ALL")
+                        .param("from", "1")
+                        .param("size", "20"))
                 .andExpect(status().isBadRequest());
     }
+
     @SneakyThrows
     @Test
     void getAllItemsUser_whenInputValueValid_thenReturnListBooking() {
         List<Booking> list = List.of(booking);
         when(bookingService.getUserItems(anyLong(), anyString(), anyInt(), anyInt())).thenReturn(list);
 
-         mockMvc.perform(get("/bookings/owner", bookingUser.getId())
+        mockMvc.perform(get("/bookings/owner", bookingUser.getId())
                         .header(USER_ID, "1")
                         .param("state", "ALL")
                         .param("from", "1")
                         .param("size", "15"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                 .andExpect(jsonPath("$[0].id").value(list.get(0).getId()))
-                 .andExpect(jsonPath("$[0].booker.id").value(list.get(0).getBookingUser().getId()))
-                 .andExpect(jsonPath("$[0].item.name").value(list.get(0).getItem().getName()));
-         verify(bookingService, times(1)).getUserItems(anyLong(), anyString(), anyInt(), anyInt());
+                .andExpect(jsonPath("$[0].id").value(list.get(0).getId()))
+                .andExpect(jsonPath("$[0].booker.id").value(list.get(0).getBookingUser().getId()))
+                .andExpect(jsonPath("$[0].item.name").value(list.get(0).getItem().getName()));
+        verify(bookingService, times(1)).getUserItems(anyLong(), anyString(), anyInt(), anyInt());
     }
 
     @SneakyThrows
     @Test
-    void getAllItemsUser_whenInputValueNotValid_thenReturnThrows(){
+    void getAllItemsUser_whenInputValueNotValid_thenReturnThrows() {
         List<Booking> list = List.of(booking);
         when(bookingService.getUserItems(anyLong(), anyString(), anyInt(), anyInt())).thenReturn(list);
 

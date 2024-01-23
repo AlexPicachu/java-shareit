@@ -54,11 +54,7 @@ class UserServiceImplTest {
 
         assertEquals(userToSave, actualUser, "Метод отработал некорректно");
         verify(userRepository).save(userToSave);
-//        verify(userRepository, never()).save(userToSave);
         verify(userRepository, times(1)).save(userToSave);
-        //проверяет какое количество раз вызывался мок
-        //  verify(userRepository, atLeast(4)).save(userToSave);
-        // проверяет что мок вызывался не более к-ва раз
         verify(userRepository, atMost(1)).save(userToSave);
 
     }
@@ -99,7 +95,7 @@ class UserServiceImplTest {
         User newUser = new User();
         newUser.setEmail("newUser@uandex.ru");
         newUser.setName("newUser");
-        assertThrows(NotFoundException.class, ()-> userService.updateUser(newUser));
+        assertThrows(NotFoundException.class, () -> userService.updateUser(newUser));
         verify(userRepository, never()).save(newUser);
     }
 
@@ -117,14 +113,14 @@ class UserServiceImplTest {
     }
 
     @Test
-    void getUserById_whenUserNotFound_thenReturnThrows(){
+    void getUserById_whenUserNotFound_thenReturnThrows() {
         long userId = 0L;
         User oldUser = new User();
         oldUser.setEmail("oldUser@uandex.ru");
         oldUser.setName("userId");
         when(userRepository.findById(userId))
                 .thenThrow(NotFoundException.class);
-        assertThrows(NotFoundException.class, ()-> userService.getUserById(userId));
+        assertThrows(NotFoundException.class, () -> userService.getUserById(userId));
 
     }
 
