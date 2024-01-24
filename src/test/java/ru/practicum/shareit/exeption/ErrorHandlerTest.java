@@ -9,7 +9,7 @@ class ErrorHandlerTest {
     private ErrorHandler errorHandler;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         errorHandler = new ErrorHandler();
     }
 
