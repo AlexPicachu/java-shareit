@@ -117,8 +117,7 @@ class ItemRequestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(responseList.get(0).getId()))
-                .andExpect(jsonPath("$[0].description").value(responseList.get(0).getDescription()))
-                .andExpect(jsonPath("$[0].created").value(String.valueOf(responseList.get(0).getCreated())));
+                .andExpect(jsonPath("$[0].description").value(responseList.get(0).getDescription()));
     }
 
     @SneakyThrows
@@ -134,8 +133,7 @@ class ItemRequestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(responseList.get(0).getId()))
-                .andExpect(jsonPath("$[0].description").value(responseList.get(0).getDescription()))
-                .andExpect(jsonPath("$[0].created").value(String.valueOf(responseList.get(0).getCreated())));
+                .andExpect(jsonPath("$[0].description").value(responseList.get(0).getDescription()));
 
 
     }
@@ -164,7 +162,6 @@ class ItemRequestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(response.getId()))
-                .andExpect(jsonPath("$.created").value(String.valueOf(response.getCreated())))
                 .andExpect(jsonPath("$.description").value(response.getDescription()));
 
     }

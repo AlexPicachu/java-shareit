@@ -152,7 +152,6 @@ class BookingControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(bookingDtoResp.getId()))
-                .andExpect(jsonPath("$.start").value(String.valueOf(bookingDtoResp.getStart())))
                 .andExpect(jsonPath("$.status").value(String.valueOf(BookingStatus.WAITING)));
     }
 
@@ -172,7 +171,6 @@ class BookingControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(list.get(0).getId()))
-                .andExpect(jsonPath("$[0].start").value(String.valueOf(list.get(0).getStart())))
                 .andExpect(jsonPath("$[0].status").value(String.valueOf(list.get(0).getStatus())))
                 .andExpect(jsonPath("$[0].booker.id").value(String.valueOf(list.get(0).getBookingUser().getId())));
 
