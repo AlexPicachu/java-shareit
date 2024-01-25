@@ -31,12 +31,12 @@ public interface ItemService {
     /**
      * Метод возвращает все вещи конкретного пользователя
      */
-    List<ItemWithCommentsAndBookings> getUserItems(Long userId);
+    List<ItemWithCommentsAndBookings> getUserItems(Long userId, Integer from, Integer size);
 
     /**
      * Метод поиска вещей
      */
-    List<Item> searchItem(String text);
+    List<Item> searchItem(String text, Integer from, Integer size);
 
     /**
      * Метод для создания нового комментария
