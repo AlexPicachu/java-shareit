@@ -54,6 +54,7 @@ class BookingServiceImplTest {
 
     @BeforeEach
     void setUpp() {
+        bookingService = new BookingServiceImpl(bookingRepository, userRepository, itemRepository);
         user = User.builder()
                 .id(1L)
                 .email("alex@mail.ru")
