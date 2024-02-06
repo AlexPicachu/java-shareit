@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class BookingServiceImplTest {
 
-
+    @InjectMocks
     private BookingServiceImpl bookingService;
     @Mock
     private BookingRepository bookingRepository;
@@ -54,7 +54,6 @@ class BookingServiceImplTest {
 
     @BeforeEach
     void setUpp() {
-        bookingService = new BookingServiceImpl(bookingRepository, userRepository, itemRepository);
         user = User.builder()
                 .id(1L)
                 .email("alex@mail.ru")
